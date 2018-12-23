@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//bu bir git denemesi
+
         spinnerKaynakDoviz = (Spinner) findViewById(R.id.kaynakDoviz);
         spinnerHedefDoviz = (Spinner) findViewById(R.id.hedefDoviz);
         btnCevirmAc = (Button) findViewById(R.id.buttonCevrimAc);
