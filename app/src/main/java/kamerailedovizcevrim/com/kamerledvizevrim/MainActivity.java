@@ -8,12 +8,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     //Spinner içerisine koyacağımız verileri tanımlıyoruz.
+    Yardimci yardimciSinif = new Yardimci();
     private String[] kaynakDovizEleman={"USD","EUR"};
     private String[] hedefDovizEleman={"TRY"};
+    private String[] dovizlerDeneme = yardimciSinif.Dovizler;
 
     //Spinner'ları ve Adapter'lerini tanımlıyoruz.
     private Spinner spinnerKaynakDoviz;
@@ -35,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         btnCevirmAc = (Button) findViewById(R.id.buttonCevrimAc);
 
         //Spinner'lar için adapterleri hazırlıyoruz.
-        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, kaynakDovizEleman);
-        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,hedefDovizEleman);
+        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dovizlerDeneme);
+        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dovizlerDeneme);
 
         //Listelenecek verilerin görünümünü belirliyoruz.
         dataAdapterForKaynakDoviz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerKaynakDoviz.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                m_KaynakDoviz = parent.getSelectedItem().toString();
+                m_KaynakDoviz = parent.getSelectedItem().toString().substring(0,3);
             }
 
             @Override
@@ -61,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         spinnerHedefDoviz.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                m_HedefDoviz = parent.getSelectedItem().toString();
+                m_HedefDoviz = parent.getSelectedItem().toString().substring(0,3);
+                Toast.makeText(MainActivity.this, "Hedef: "+m_HedefDoviz, Toast.LENGTH_SHORT).show();
             }
 
             @Override

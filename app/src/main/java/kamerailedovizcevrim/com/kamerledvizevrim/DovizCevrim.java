@@ -322,8 +322,8 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
 
                 String oran = jsonObject.getJSONObject(kaynakDoviz + "_" + hedefDoviz).getString("val").toString();
 
-                Double sonuc = Double.valueOf(fiyat) * Double.parseDouble(oran);
-                mTextView.setText(fiyat.toString() + kaynakDoviz + " : " + sonuc.toString() + hedefDoviz);
+                Double sonuc = Double.valueOf(fiyat) * Math.round(Double.parseDouble(oran));
+                mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);
 
             } catch (JSONException e) {
                 e.printStackTrace();
