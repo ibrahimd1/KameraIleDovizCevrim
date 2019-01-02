@@ -5,7 +5,27 @@
     android:background="#5e6798">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtHedefDoviz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hedefDoviz"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/hedefDoviz"
+        android:layout_marginTop="39dp"
+        android:text="Hedef Döviz" />
+
+    <Spinner
+        android:id="@+id/hedefDoviz"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtKaynakDoviz"
+        android:layout_alignStart="@+id/txtKaynakDoviz"
+        android:layout_below="@+id/txtHedefDoviz"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/custom_spinner"/>
+
+    <TextView
+        android:id="@+id/txtKaynakDoviz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -18,41 +38,40 @@
 
     <Spinner
         android:id="@+id/kaynakDoviz"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/txtKaynakDoviz"
+        android:layout_alignStart="@+id/txtKaynakDoviz"
+        android:layout_below="@+id/txtKaynakDoviz"
         android:layout_marginTop="18dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/hedefDoviz"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/hedefDoviz"
-        android:layout_marginTop="39dp"
-        android:text="Hedef Döviz" />
-
-    <Spinner
-        android:id="@+id/hedefDoviz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="13dp" />
 
     <Button
         android:id="@+id/buttonCevrimAc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
-        android:text="Çevir"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/custom_button"
+        android:text="Çevir"
+        android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color"
-        android:textStyle="normal"/>
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/butonManuelCevrim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCevrimAc"
+        android:layout_alignEnd="@+id/buttonCevrimAc"
+        android:layout_alignLeft="@+id/kaynakDoviz"
+        android:layout_alignRight="@+id/buttonCevrimAc"
+        android:layout_alignStart="@+id/kaynakDoviz"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/custom_button"
+        android:text="El İle"
+        android:textAllCaps="false"
+        android:textColor="@drawable/custom_button_text_color" />
 </RelativeLayout>

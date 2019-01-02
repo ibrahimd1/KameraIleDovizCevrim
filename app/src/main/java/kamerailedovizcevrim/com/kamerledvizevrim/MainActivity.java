@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> dataAdapterForKaynakDoviz;
     private ArrayAdapter<String> dataAdapterForHedefDoviz;
     private Button btnCevirmAc;
+    private Button btnManuelGiris;
 
     private String m_KaynakDoviz;
     private String m_HedefDoviz;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 m_HedefDoviz = parent.getSelectedItem().toString().substring(0,3);
-                Toast.makeText(MainActivity.this, "Hedef: "+m_HedefDoviz, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -80,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,DovizCevrim.class);
                 intent.putExtra("KaynakDoviz",m_KaynakDoviz);
                 intent.putExtra("HedefDoviz", m_HedefDoviz);
+                startActivity(intent);
+            }
+        });
+
+        btnManuelGiris = (Button) findViewById(R.id.butonManuelCevrim);
+        btnManuelGiris.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ManuelGiris.class);
                 startActivity(intent);
             }
         });
