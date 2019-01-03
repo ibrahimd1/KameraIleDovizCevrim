@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ManuelGiris" android:label="Manuel Giriş">
+        <activity android:name=".ManuelGiris" android:label="Manuel Giriş" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

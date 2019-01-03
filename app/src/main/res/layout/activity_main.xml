@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5e6798">
+    android:background="@drawable/custom_background"> <!--5e6798-->
 
     <TextView
         android:id="@+id/txtHedefDoviz"
@@ -12,7 +12,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/hedefDoviz"
         android:layout_marginTop="39dp"
-        android:text="Hedef Döviz" />
+        android:text="Hedef Döviz"
+        android:textColor="#345d7e"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/hedefDoviz"
@@ -34,7 +36,9 @@
         android:layout_marginLeft="29dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="16dp"
-        android:text="Kaynak Döviz" />
+        android:text="Kaynak Döviz"
+        android:textColor="#345d7e"
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/kaynakDoviz"
@@ -43,7 +47,8 @@
         android:layout_alignLeft="@+id/txtKaynakDoviz"
         android:layout_alignStart="@+id/txtKaynakDoviz"
         android:layout_below="@+id/txtKaynakDoviz"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp"
+        android:background="@drawable/custom_spinner"/>
 
     <Button
         android:id="@+id/buttonCevrimAc"
