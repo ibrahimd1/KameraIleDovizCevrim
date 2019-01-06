@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="132dp"
-        android:background="@drawable/custom_button"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_background"
         android:text="Dönüştür"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color"
@@ -51,4 +51,5 @@
         android:layout_alignStart="@+id/txtTutarIsim"
         android:layout_below="@+id/edtManuelTutar"
         android:layout_marginTop="53dp" />
+
 </RelativeLayout>

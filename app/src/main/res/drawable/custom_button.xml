@@ -16,8 +16,8 @@
 
     <item>
         <shape>
-            <gradient android:startColor="#ff9994" android:endColor="#ecb5b3" android:angle="270" />
-            <corners android:radius="27px" />
+            <gradient android:startColor="#ff9994" android:endColor="#ecb5b3" android:angle="270"  />
+            <corners android:radius="27px" /> <!--ff9994-->
         </shape>
     </item>
 </selector>

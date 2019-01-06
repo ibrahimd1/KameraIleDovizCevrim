@@ -1,10 +1,17 @@
 package kamerailedovizcevrim.com.kamerledvizevrim;
 
+import android.content.Context;
+import android.widget.Toast;
 /**
  * Created by Ibrahim on 26.12.2018.
  */
 
 public class Yardimci {
+
+    public void Mesaj(String s, Context context) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+    }
+
     public String[] Dovizler={"USD Amerikan Doları",
             "TRY Türk Lirası",
             "EUR Euro",
@@ -161,4 +168,6 @@ public class Yardimci {
             "ZWL Zimbabve Doları"
     };
 }
+
+
 

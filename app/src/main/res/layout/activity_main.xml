@@ -59,7 +59,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/button_background"
         android:text="Çevir"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color"
@@ -75,7 +75,7 @@
         android:layout_alignRight="@+id/buttonCevrimAc"
         android:layout_alignStart="@+id/kaynakDoviz"
         android:layout_marginBottom="17dp"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/button_background"
         android:text="El İle"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color" />
