@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
  * Created by Ibrahim on 6.01.2019.
  */
 
-public  class MyAsyncTask extends AsyncTask<Void,Void,Void> {
+public  class MyAsyncTask extends AsyncTask<Void,Void,String> {
 
     String m_KaynakDoviz;
     String m_HedefDoviz;
@@ -33,9 +33,9 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,Void> {
     Long m_Oran;
     String m_Mesaj;
     Yardimci m_Yardimci = new Yardimci();
+    String oran;
 
-
-    public MyAsyncTask(String kaynakDoviz,String hedefDoviz,Context context,Long oran,String mesaj){
+    public MyAsyncTask(String kaynakDoviz, String hedefDoviz, Context context, Long oran, String mesaj){
         m_KaynakDoviz = kaynakDoviz;
         m_HedefDoviz = hedefDoviz;
         m_Context = context;
@@ -47,7 +47,7 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,Void> {
 
     JSONObject jsonObject = null;
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(Void... voids) {
         StringBuilder link = new StringBuilder();
         link.append("http://free.currencyconverterapi.com/api/v5/convert?q=");
         link.append(m_KaynakDoviz);
@@ -72,6 +72,8 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,Void> {
                 String result = convertStreamToString(instream);
 
                 jsonObject = new JSONObject(result);
+                oran = jsonObject.getJSONObject(m_KaynakDoviz + "_" + m_HedefDoviz).getString("val").toString();
+
 
                 instream.close();
             }
@@ -83,34 +85,45 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,Void> {
         } catch (JSONException e) {
             Mesaj(e.getMessage());
         }
-        return null;
+        return oran;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
+
+  /*  @Override
+    protected String onPostExecute() {
         if (dialog.isShowing())
             dialog.dismiss();
 
         try {
 
-            String oran = jsonObject.getJSONObject(m_KaynakDoviz + "_" + m_HedefDoviz).getString("val").toString();
+            oran = jsonObject.getJSONObject(m_KaynakDoviz + "_" + m_HedefDoviz).getString("val").toString();
 
             m_Oran = Math.round(Double.parseDouble(oran));
             m_Yardimci.Mesaj("Oranservice:" + m_Oran, m_Context);
             /*Double sonuc = Double.valueOf(fiyat) * Math.round(Double.parseDouble(oran));
-            mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);*/
-
+            mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);
+            return oran;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }*/
+
+
+
+    public Long getOran(){
+        return m_Oran;
+    }
+
+    public String getOran2(String oranasd){
+        return oranasd;
     }
 
     private void Mesaj(String s) {
         Toast.makeText(m_Context, s, Toast.LENGTH_LONG).show();
     }
 
-    private static String convertStreamToString(InputStream is) {
+    public static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();

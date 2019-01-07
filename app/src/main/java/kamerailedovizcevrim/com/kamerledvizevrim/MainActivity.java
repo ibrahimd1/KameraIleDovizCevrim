@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ManuelGiris.class);
+                intent.putExtra("KaynakDoviz",m_KaynakDoviz);
+                intent.putExtra("HedefDoviz", m_HedefDoviz);
                 startActivity(intent);
             }
         });

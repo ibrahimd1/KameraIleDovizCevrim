@@ -1,7 +1,5 @@
 package kamerailedovizcevrim.com.kamerledvizevrim;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,21 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Ibrahim on 2.01.2019.
@@ -39,6 +24,7 @@ public class ManuelGiris extends AppCompatActivity {
     Bundle bundle;
     MyAsyncTask apiCaller;
     Long m_Oran;
+    String asd;
     Yardimci m_Yardimci = new Yardimci();
 
     @Override
@@ -62,8 +48,14 @@ public class ManuelGiris extends AppCompatActivity {
                     txtManuelSonuc.setText("Tutar alanı boş geçilemez!");
                 } else {
                     apiCaller = new MyAsyncTask(kaynakDoviz, hedefDoviz, ManuelGiris.this, m_Oran, "Yükleniyor...");
-                    apiCaller.execute();
-                    m_Yardimci.Mesaj("Oran: " + m_Oran, ManuelGiris.this);
+                    try {
+                        asd = apiCaller.execute().get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    m_Yardimci.Mesaj("Hedef: " + hedefDoviz + " Kaynak: " + kaynakDoviz + " Oran: " + asd, ManuelGiris.this);
                 }
             }
         });
