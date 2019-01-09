@@ -14,8 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Spinner içerisine koyacağımız verileri tanımlıyoruz.
     Yardimci yardimciSinif = new Yardimci();
-    private String[] kaynakDovizEleman={"USD","EUR"};
-    private String[] hedefDovizEleman={"TRY"};
     private String[] dovizlerDeneme = yardimciSinif.Dovizler;
 
     //Spinner'ları ve Adapter'lerini tanımlıyoruz.

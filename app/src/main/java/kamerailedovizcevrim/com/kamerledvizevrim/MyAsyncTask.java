@@ -30,16 +30,14 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,String> {
     Context m_Context;
     String modalMesaj;
     ProgressDialog dialog;
-    Long m_Oran;
     String m_Mesaj;
     Yardimci m_Yardimci = new Yardimci();
     String oran;
 
-    public MyAsyncTask(String kaynakDoviz, String hedefDoviz, Context context, Long oran, String mesaj){
+    public MyAsyncTask(String kaynakDoviz, String hedefDoviz, Context context, String mesaj){
         m_KaynakDoviz = kaynakDoviz;
         m_HedefDoviz = hedefDoviz;
         m_Context = context;
-        m_Oran = oran;
         m_Mesaj = mesaj;
         this.modalMesaj = m_Mesaj;
         this.dialog = new ProgressDialog(m_Context);
@@ -109,15 +107,6 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,String> {
         }
     }*/
 
-
-
-    public Long getOran(){
-        return m_Oran;
-    }
-
-    public String getOran2(String oranasd){
-        return oranasd;
-    }
 
     private void Mesaj(String s) {
         Toast.makeText(m_Context, s, Toast.LENGTH_LONG).show();
