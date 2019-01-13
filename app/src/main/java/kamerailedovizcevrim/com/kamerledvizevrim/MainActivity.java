@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String m_KaynakDoviz;
     private String m_HedefDoviz;
+    private String m_KaynakDovizTam;
+    private String m_HedefDovizTam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 m_KaynakDoviz = parent.getSelectedItem().toString().substring(0,3);
+                m_KaynakDovizTam = parent.getSelectedItem().toString();
             }
 
             @Override
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 m_HedefDoviz = parent.getSelectedItem().toString().substring(0,3);
+                m_HedefDovizTam = parent.getSelectedItem().toString();
             }
 
             @Override
@@ -89,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ManuelGiris.class);
                 intent.putExtra("KaynakDoviz",m_KaynakDoviz);
                 intent.putExtra("HedefDoviz", m_HedefDoviz);
+                intent.putExtra("KaynakDovizTam",m_KaynakDovizTam);
+                intent.putExtra("HedefDovizTam", m_HedefDovizTam);
                 startActivity(intent);
             }
         });
