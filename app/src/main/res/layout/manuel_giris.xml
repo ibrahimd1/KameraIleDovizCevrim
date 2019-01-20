@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/custom_background">
 
+    <include layout="@layout/header"></include>
+
     <Spinner
         android:id="@+id/spinnerManuelKaynak"
         android:layout_width="match_parent"

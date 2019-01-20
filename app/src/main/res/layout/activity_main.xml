@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/custom_background"> <!--5e6798-->
+    <include layout="@layout/header"></include>
 
     <TextView
         android:id="@+id/txtHedefDoviz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/hedefDoviz"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/hedefDoviz"
-        android:layout_marginTop="39dp"
+        android:layout_above="@+id/hedefDoviz"
+        android:layout_alignLeft="@+id/buttonCevrimAc"
+        android:layout_alignStart="@+id/buttonCevrimAc"
+        android:layout_marginBottom="12dp"
         android:text="Hedef Döviz"
         android:textColor="#345d7e"
         android:textSize="16sp" />
@@ -20,22 +21,20 @@
         android:id="@+id/hedefDoviz"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtKaynakDoviz"
-        android:layout_alignStart="@+id/txtKaynakDoviz"
-        android:layout_below="@+id/txtHedefDoviz"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/custom_spinner"/>
+        android:layout_above="@+id/butonManuelCevrim"
+        android:layout_alignLeft="@+id/butonManuelCevrim"
+        android:layout_alignStart="@+id/butonManuelCevrim"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/custom_spinner" />
 
     <TextView
         android:id="@+id/txtKaynakDoviz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/hedefDoviz"
-        android:layout_marginLeft="29dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="16dp"
+        android:layout_above="@+id/kaynakDoviz"
+        android:layout_alignLeft="@+id/kaynakDoviz"
+        android:layout_alignStart="@+id/kaynakDoviz"
+        android:layout_marginBottom="12dp"
         android:text="Kaynak Döviz"
         android:textColor="#345d7e"
         android:textSize="16sp" />
@@ -44,11 +43,11 @@
         android:id="@+id/kaynakDoviz"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtKaynakDoviz"
-        android:layout_alignStart="@+id/txtKaynakDoviz"
-        android:layout_below="@+id/txtKaynakDoviz"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/custom_spinner"/>
+        android:layout_alignBottom="@+id/txtHedefDoviz"
+        android:layout_alignLeft="@+id/txtHedefDoviz"
+        android:layout_alignStart="@+id/txtHedefDoviz"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/custom_spinner" />
 
     <Button
         android:id="@+id/buttonCevrimAc"
@@ -60,7 +59,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/button_background"
-        android:text="Çevir"
+        android:text="Kamera İle Çevir"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color"
         android:textStyle="normal" />
@@ -76,7 +75,7 @@
         android:layout_alignStart="@+id/kaynakDoviz"
         android:layout_marginBottom="17dp"
         android:background="@drawable/button_background"
-        android:text="El İle"
+        android:text="El İle Çevir"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color" />
 </RelativeLayout>

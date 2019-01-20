@@ -3,6 +3,8 @@ package kamerailedovizcevrim.com.kamerledvizevrim;
 import android.app.Activity;
 import android.os.Bundle;
 import  android.content.Intent;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by Ibrahim on 11.11.2018.
@@ -14,6 +16,10 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+
+        ImageView img = (ImageView) findViewById(R.id.imageSplashScreen);
+        img.setVisibility(View.VISIBLE);
+
 
         Thread timerThread=new Thread(){
           public void run(){

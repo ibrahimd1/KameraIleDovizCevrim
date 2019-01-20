@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="5"
-    >
+    android:background="@drawable/custom_background">
 
     <SurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4" />
+        android:layout_weight="3" />
 
     <TextView
         android:id="@+id/text_view"
@@ -29,6 +29,9 @@
         android:id="@+id/btnApi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_cevir" />
+        android:background="@drawable/button_background"
+        android:text="@string/button_cevir"
+        android:textAllCaps="false"
+        android:textColor="@drawable/custom_button_text_color" />
 
 </LinearLayout>

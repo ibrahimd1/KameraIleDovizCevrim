@@ -169,12 +169,17 @@ public class ManuelGiris extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edtManuelHedefText.getText().toString() != null && edtManuelHedefText.getText().toString().length() > 0) {
-                    m_Sonuc = Double.valueOf(edtManuelHedefText.getText().toString()) * (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
-                    edtManuelKaynakText.setText(m_Sonuc.toString());
-                }
-                else
-                    edtManuelKaynakText.setText("");
+               if(m_Durum && edtManuelHedefText.isFocused()) {
+                   if (edtManuelHedefText.getText().toString() != null && edtManuelHedefText.getText().toString().length() > 0) {
+                       m_Sonuc = Double.valueOf(edtManuelHedefText.getText().toString()) * (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
+                       m_Sonuc = Math.round(m_Sonuc * 100.0) / 100.0;
+                       edtManuelKaynakText.setText(m_Sonuc.toString());
+                   } else
+                       edtManuelKaynakText.setText("");
+                   m_Durum = edtManuelHedefText.isFocused();
+                   if(m_Durum)
+                       Log.i("focushedef", edtManuelHedefText.isFocused() ? "E" : "H");
+               }
             }
         });
 
@@ -191,13 +196,17 @@ public class ManuelGiris extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-               /* if (m_Durum) {
-                /*m_Sonuc = Double.valueOf(edtManuelKaynakText.getText().toString()) / (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
-                edtManuelHedefText.setText(m_Sonuc.toString());
-                    Log.i("BILGI", "edtManuelKaynakText " + edtManuelKaynakText.getText().toString());
-                    edtManuelHedefText.setText("5");
-                    m_Durum = false;
-                }*/
+                if(m_Durum && edtManuelKaynakText.isFocused()) {
+                    if (edtManuelKaynakText.getText().toString() != null && edtManuelKaynakText.getText().toString().length() > 0) {
+                        m_Sonuc = Double.valueOf(edtManuelKaynakText.getText().toString()) / (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
+                        m_Sonuc = Math.round(m_Sonuc * 100.0) / 100.0;
+                        edtManuelHedefText.setText(m_Sonuc.toString());
+                    } else
+                        edtManuelHedefText.setText("");
+                    m_Durum = edtManuelKaynakText.isFocused();
+                    if(m_Durum)
+                        Log.i("focuskaynak", edtManuelKaynakText.isFocused() ? "E" : "H");
+                }
             }
         });
     }
