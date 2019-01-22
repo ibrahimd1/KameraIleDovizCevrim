@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnCevirmAc = (Button) findViewById(R.id.buttonCevrimAc);
 
         //Spinner'lar için adapterleri hazırlıyoruz.
-        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dovizlerDeneme);
-        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dovizlerDeneme);
+        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, R.layout.spinner_text_main, dovizlerDeneme);
+        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, R.layout.spinner_text_main, dovizlerDeneme);
 
         //Listelenecek verilerin görünümünü belirliyoruz.
         dataAdapterForKaynakDoviz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -29,6 +29,7 @@
         android:layout_marginRight="23dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:fontFamily="monospace"
         />
 
     <Spinner
@@ -51,5 +52,6 @@
         android:layout_alignLeft="@+id/edtManuelHedefText"
         android:layout_alignStart="@+id/edtManuelHedefText"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:fontFamily="monospace"/>
 </RelativeLayout>
