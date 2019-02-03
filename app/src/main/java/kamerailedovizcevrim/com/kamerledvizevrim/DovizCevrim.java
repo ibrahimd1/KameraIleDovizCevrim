@@ -4,6 +4,11 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -12,8 +17,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Size;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -45,8 +52,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -64,6 +73,8 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
     Bundle bundle;
     String hedefDoviz;
     String kaynakDoviz;
+    MyAsyncTask apiCaller;
+    String m_StrOran;
 
     private static final String TAG = "MainActivity";
     private static final int requestPermissionID = 101;
@@ -76,11 +87,7 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK) {
-            Log.i(TAG, "Geriye basıldı");
-            setContentView(R.layout.doviz_cevrim);
-            kamerayiBaslat();
-            Mesaj("Geriiiii");
-            return true;
+            onBackPressed();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -97,21 +104,16 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
         }
 
         fiyat = Double.valueOf(0);
-        List<String> dovizler = getDovizBilgi();
-        String asd = "";
-        for (String s : dovizler)
-        {
-            asd += s + "\t";
-        }
-        Mesaj(asd);
-
-        Log.i("TCMB",asd);
+        getServisOran(kaynakDoviz, hedefDoviz);
 
         btnApi=(Button)findViewById(R.id.btnApi);
         btnApi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                new myAsyncTask("Yükleniyor").execute();
+
+                Double sonuc = fiyat * (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
+                sonuc = Math.round(sonuc * 100.0) / 100.0;
+                mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);
             }
         });
         kamerayiBaslat();
@@ -121,7 +123,24 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
         mCameraView = findViewById(R.id.surfaceView);
         mTextView = findViewById(R.id.text_view);
         startCameraSource();
+        //kutuCiz();
+
     }
+
+    private void getServisOran(String inKaynakDoviz,String inHedefDoviz){
+
+        apiCaller = new MyAsyncTask(inKaynakDoviz, inHedefDoviz, DovizCevrim.this, "Yükleniyor...");
+
+        try {
+            m_StrOran = apiCaller.execute().get();
+            Log.i("OranDegisti", inKaynakDoviz + " " + inHedefDoviz + " " + m_StrOran);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -137,6 +156,7 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                     return;
                 }
                 mCameraSource.start(mCameraView.getHolder());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -160,6 +180,9 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                     .setRequestedFps(2.0f)
                     .build();
 
+            //com.google.android.gms.common.images.Size s = mCameraSource.getPreviewSize();
+            //Log.i("Kamera: ", Integer.toString(s.getWidth()) + " " + Integer.toString(s.getHeight()));
+
             /**
              * Add call back to SurfaceView and check if camera permission is granted.
              * If permission is granted we can start our cameraSource and pass it to surfaceView
@@ -178,6 +201,7 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                             return;
                         }
                         mCameraSource.start(mCameraView.getHolder());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -215,9 +239,9 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                                 for (int i = 0; i < items.size(); i++) {
                                     TextBlock item = items.valueAt(i);
                                     if (isNumeric(item.getValue().replace(',', '.'))) {
-                                        //stringBuilder.append(item.getValue());
+                                        //stringBuilder.append(item.getValue().replaceAll(".",""));
                                         //stringBuilder.append("\n");
-                                        fiyat = Double.parseDouble(item.getValue().replace(',', '.'));
+                                        fiyat = Double.parseDouble(item.getValue().replace(".","").replace(',', '.'));
                                         break;
                                     }
                                 }

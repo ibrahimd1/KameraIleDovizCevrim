@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/button_background"
@@ -75,10 +75,21 @@
         android:layout_alignRight="@+id/buttonCevrimAc"
         android:layout_alignStart="@+id/buttonCevrimAc"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="37dp"
         android:background="@drawable/button_background"
         android:text="El İle Çevir"
         android:textAllCaps="false"
         android:textColor="@drawable/custom_button_text_color"
         android:fontFamily="monospace"/>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-4739427604654377/4486122267">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>

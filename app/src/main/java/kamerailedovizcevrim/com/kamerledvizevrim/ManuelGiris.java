@@ -1,5 +1,6 @@
 package kamerailedovizcevrim.com.kamerledvizevrim;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -209,6 +215,10 @@ public class ManuelGiris extends AppCompatActivity {
                 }
             }
         });
+
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
+        adView.loadAd(adRequest); //adView i yüklüyoruz
     }
 
     private void getServisOran(String inKaynakDoviz,String inHedefDoviz){

@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class MainActivity extends AppCompatActivity {
 
     //Spinner içerisine koyacağımız verileri tanımlıyoruz.
@@ -98,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
+        adView.loadAd(adRequest); //adView i yüklüyoruz
 
     }
 }
