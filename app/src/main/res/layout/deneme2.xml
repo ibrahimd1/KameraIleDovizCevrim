@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_background">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="105dp"
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:layout_below="@+id/surfaceView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:text="TextView" />
 
-    <Spinner
-        android:id="@+id/spinner4"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnApi"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="33dp" />
+        android:layout_below="@+id/text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/button_background"
+        android:text="@string/button_cevir"
+        android:textAllCaps="false"
+        android:layout_marginBottom="20dp"
+        android:textColor="@drawable/custom_button_text_color" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinner4"
-        android:layout_alignStart="@+id/spinner4"
-        android:layout_below="@+id/spinner4"
-        android:layout_marginTop="32dp"
-        android:text="TextView" />
-
-    <Spinner
-        android:id="@+id/spinner5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5"
-        android:layout_below="@+id/textView5"
-        android:layout_marginTop="34dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-4739427604654377/4486122267"></com.google.android.gms.ads.AdView>
 </RelativeLayout>

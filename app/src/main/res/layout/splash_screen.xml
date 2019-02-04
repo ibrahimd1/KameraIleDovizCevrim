@@ -23,8 +23,8 @@
         android:layout_below="@+id/imageSplashScreen"
         android:layout_centerHorizontal="true"
         android:fontFamily="casual"
-        android:text="Döviz Çevrim"
+        android:text="Kamera İle Döviz Çevrim"
         android:textColor="#fb7d26"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 </RelativeLayout>

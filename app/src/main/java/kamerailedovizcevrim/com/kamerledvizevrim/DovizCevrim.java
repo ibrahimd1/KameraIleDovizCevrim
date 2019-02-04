@@ -28,6 +28,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -117,6 +119,10 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
             }
         });
         kamerayiBaslat();
+
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
+        adView.loadAd(adRequest); //adView i yüklüyoruz
     }
 
     private void kamerayiBaslat(){
