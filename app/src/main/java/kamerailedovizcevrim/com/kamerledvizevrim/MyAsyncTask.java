@@ -3,8 +3,6 @@ package kamerailedovizcevrim.com.kamerledvizevrim;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -31,7 +29,6 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,String> {
     String modalMesaj;
     ProgressDialog dialog;
     String m_Mesaj;
-    Yardimci m_Yardimci = new Yardimci();
     String oran;
 
     public MyAsyncTask(String kaynakDoviz, String hedefDoviz, Context context, String mesaj){
@@ -71,45 +68,17 @@ public  class MyAsyncTask extends AsyncTask<Void,Void,String> {
 
                 jsonObject = new JSONObject(result);
                 oran = jsonObject.getJSONObject(m_KaynakDoviz + "_" + m_HedefDoviz).getString("val").toString();
-
-
                 instream.close();
             }
 
         } catch (ClientProtocolException e) {
-            Mesaj(e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
-            Mesaj(e.getMessage());
-        } catch (JSONException e) {
-            Mesaj(e.getMessage());
-        }
-        return oran;
-    }
-
-
-  /*  @Override
-    protected String onPostExecute() {
-        if (dialog.isShowing())
-            dialog.dismiss();
-
-        try {
-
-            oran = jsonObject.getJSONObject(m_KaynakDoviz + "_" + m_HedefDoviz).getString("val").toString();
-
-            m_Oran = Math.round(Double.parseDouble(oran));
-            m_Yardimci.Mesaj("Oranservice:" + m_Oran, m_Context);
-            /*Double sonuc = Double.valueOf(fiyat) * Math.round(Double.parseDouble(oran));
-            mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);
-            return oran;
-
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }*/
-
-
-    private void Mesaj(String s) {
-        Toast.makeText(m_Context, s, Toast.LENGTH_LONG).show();
+        return oran;
     }
 
     public static String convertStreamToString(InputStream is) {

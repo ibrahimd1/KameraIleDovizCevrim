@@ -17,7 +17,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        ImageView img = (ImageView) findViewById(R.id.imageSplashScreen);
+        ImageView img = findViewById(R.id.imageSplashScreen);
         img.setVisibility(View.VISIBLE);
 
 

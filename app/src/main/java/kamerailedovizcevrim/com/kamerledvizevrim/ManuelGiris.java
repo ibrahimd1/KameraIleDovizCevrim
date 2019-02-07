@@ -1,25 +1,21 @@
 package kamerailedovizcevrim.com.kamerledvizevrim;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,26 +27,20 @@ import java.util.concurrent.ExecutionException;
 
 public class ManuelGiris extends AppCompatActivity {
 
-    Button btnManuelCevir;
-    EditText edtManuelaTutar;
-    TextView txtManuelSonuc;
     String kaynakDoviz;
     String hedefDoviz;
     String kaynakDovizTam;
     String hedefDovizTam;
     Bundle bundle;
     MyAsyncTask apiCaller;
-    Double m_Oran;
     String m_StrOran;
     Yardimci m_Yardimci = new Yardimci();
-    StringBuilder strSonucMesaj;
     Double m_Sonuc;
-    Yardimci yardimciSinif = new Yardimci();
     private Spinner spinnerManuelKaynakDoviz;
     private Spinner spinnerManuelHedefDoviz;
     private ArrayAdapter<String> dataAdapterForKaynakDoviz;
     private ArrayAdapter<String> dataAdapterForHedefDoviz;
-    private String[] dovizlerDeneme = yardimciSinif.Dovizler;
+    private String[] dovizlerDeneme = m_Yardimci.Dovizler;
     EditText edtManuelKaynakText;
     EditText edtManuelHedefText;
     boolean m_Durum = true;
@@ -68,16 +58,12 @@ public class ManuelGiris extends AppCompatActivity {
             kaynakDovizTam = bundle.getString("KaynakDovizTam");
         }
 
-        //getServisOran(kaynakDoviz, hedefDoviz);
-
-        m_Yardimci.Mesaj("Oran:" + m_Oran, ManuelGiris.this);
-
-        spinnerManuelKaynakDoviz = (Spinner) findViewById(R.id.spinnerManuelKaynak);
-        spinnerManuelHedefDoviz = (Spinner) findViewById(R.id.spinnerManuelHedef);
+        spinnerManuelKaynakDoviz = findViewById(R.id.spinnerManuelKaynak);
+        spinnerManuelHedefDoviz = findViewById(R.id.spinnerManuelHedef);
 
         //Spinner'lar için adapterleri hazırlıyoruz.
-        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, R.layout.spinnertext, dovizlerDeneme);
-        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, R.layout.spinnertext, dovizlerDeneme);
+        dataAdapterForKaynakDoviz = new ArrayAdapter<>(this, R.layout.spinnertext, dovizlerDeneme);
+        dataAdapterForHedefDoviz = new ArrayAdapter<>(this, R.layout.spinnertext, dovizlerDeneme);
 
         dataAdapterForKaynakDoviz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dataAdapterForHedefDoviz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,54 +72,16 @@ public class ManuelGiris extends AppCompatActivity {
         spinnerManuelKaynakDoviz.setAdapter(dataAdapterForKaynakDoviz);
         spinnerManuelHedefDoviz.setAdapter(dataAdapterForHedefDoviz);
 
-        ArrayList<String> dovizDizi = new ArrayList<String>(Arrays.asList(dovizlerDeneme));
+        ArrayList<String> dovizDizi = new ArrayList<>(Arrays.asList(dovizlerDeneme));
         int hedefDovizPosition = dovizDizi.indexOf(hedefDovizTam);
         int kaynakDovizPosition = dovizDizi.indexOf(kaynakDovizTam);
         spinnerManuelHedefDoviz.setSelection(hedefDovizPosition);
         spinnerManuelKaynakDoviz.setSelection(kaynakDovizPosition);
 
-        edtManuelHedefText = (EditText) findViewById(R.id.edtManuelHedefText);
-        edtManuelKaynakText = (EditText) findViewById(R.id.edtManuelKaynakText);
+        edtManuelHedefText = findViewById(R.id.edtManuelHedefText);
+        edtManuelKaynakText = findViewById(R.id.edtManuelKaynakText);
 
         edtManuelHedefText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
-
-        /*btnManuelCevir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtManuelaTutar.getText() == null || edtManuelaTutar.getText().length() == 0) {
-                    txtManuelSonuc.setText("Tutar alanı boş geçilemez!");
-                }
-                else {
-                    if (m_Oran == null || m_Oran == 0) {
-
-                        apiCaller = new MyAsyncTask(kaynakDoviz, hedefDoviz, ManuelGiris.this, "Yükleniyor...");
-
-                        try {
-                            m_StrOran = apiCaller.execute().get();
-                            m_Oran = Double.parseDouble(m_StrOran);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Double sonuc = Double.valueOf(edtManuelaTutar.getText().toString()) * (Math.round(Double.parseDouble(m_StrOran) * 100.0) / 100.0);
-
-                    strSonucMesaj = new StringBuilder();
-                    strSonucMesaj.append(edtManuelaTutar.getText());
-                    strSonucMesaj.append(" ");
-                    strSonucMesaj.append(kaynakDoviz);
-                    strSonucMesaj.append(" = ");
-                    strSonucMesaj.append(sonuc.toString());
-                    strSonucMesaj.append(" ");
-                    strSonucMesaj.append(hedefDoviz);
-
-                    txtManuelSonuc.setText(strSonucMesaj.toString());
-                    m_Yardimci.Mesaj("Hedef: " + hedefDoviz + " Kaynak: " + kaynakDoviz + " Oran: " + m_StrOran, ManuelGiris.this);
-                }
-            }
-        });*/
-
         spinnerManuelKaynakDoviz.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -183,8 +131,6 @@ public class ManuelGiris extends AppCompatActivity {
                    } else
                        edtManuelKaynakText.setText("");
                    m_Durum = edtManuelHedefText.isFocused();
-                   if(m_Durum)
-                       Log.i("focushedef", edtManuelHedefText.isFocused() ? "E" : "H");
                }
             }
         });
@@ -210,13 +156,11 @@ public class ManuelGiris extends AppCompatActivity {
                     } else
                         edtManuelHedefText.setText("");
                     m_Durum = edtManuelKaynakText.isFocused();
-                    if(m_Durum)
-                        Log.i("focuskaynak", edtManuelKaynakText.isFocused() ? "E" : "H");
                 }
             }
         });
 
-        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdView adView = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
         adView.loadAd(adRequest); //adView i yüklüyoruz
     }
@@ -227,17 +171,22 @@ public class ManuelGiris extends AppCompatActivity {
 
             try {
                 m_StrOran = apiCaller.execute().get();
-                m_Oran = Double.parseDouble(m_StrOran);
-                Log.i("OranDegisti", inKaynakDoviz + " " + inHedefDoviz + " " + m_Oran);
+                if(m_StrOran==null ) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Servis Hata!")
+                            .setMessage("Servis şu anda yanıt vermiyor.Lütfen daha sonra tekrar deneyiniz.")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    finish();
+                                    System.exit(0);
+                                }
+                            }).create().show();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-    }
-
-    private Double sonucHesapla(String tutar, String oran) {
-        return Double.valueOf(tutar) * (Math.round(Double.parseDouble(oran) * 100.0) / 100.0);
     }
 }
 

@@ -1,32 +1,23 @@
 package kamerailedovizcevrim.com.kamerledvizevrim;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Size;
 import android.util.SparseArray;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -34,33 +25,8 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.Format;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by Ibrahim on 26.11.2018.
@@ -83,7 +49,6 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        new myAsyncTask("Yükleniyor").execute();
     }
 
     @Override
@@ -105,11 +70,12 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
             kaynakDoviz = bundle.getString("KaynakDoviz");
         }
 
-        fiyat = Double.valueOf(0);
+        fiyat = 0d;
         getServisOran(kaynakDoviz, hedefDoviz);
 
-        btnApi=(Button)findViewById(R.id.btnApi);
+        btnApi= findViewById(R.id.btnApi);
         btnApi.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View arg0) {
 
@@ -120,7 +86,7 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
         });
         kamerayiBaslat();
 
-        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdView adView = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
         adView.loadAd(adRequest); //adView i yüklüyoruz
     }
@@ -129,8 +95,6 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
         mCameraView = findViewById(R.id.surfaceView);
         mTextView = findViewById(R.id.text_view);
         startCameraSource();
-        //kutuCiz();
-
     }
 
     private void getServisOran(String inKaynakDoviz,String inHedefDoviz){
@@ -139,7 +103,17 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
 
         try {
             m_StrOran = apiCaller.execute().get();
-            Log.i("OranDegisti", inKaynakDoviz + " " + inHedefDoviz + " " + m_StrOran);
+            if(m_StrOran==null ) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Servis Hata!")
+                        .setMessage("Servis şu anda yanıt vermiyor.Lütfen daha sonra tekrar deneyiniz.")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                finish();
+                                System.exit(0);
+                            }
+                        }).create().show();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -186,13 +160,6 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                     .setRequestedFps(2.0f)
                     .build();
 
-            //com.google.android.gms.common.images.Size s = mCameraSource.getPreviewSize();
-            //Log.i("Kamera: ", Integer.toString(s.getWidth()) + " " + Integer.toString(s.getHeight()));
-
-            /**
-             * Add call back to SurfaceView and check if camera permission is granted.
-             * If permission is granted we can start our cameraSource and pass it to surfaceView
-             */
             mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder holder) {
@@ -241,34 +208,19 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
                         mTextView.post(new Runnable() {
                             @Override
                             public void run() {
-                                StringBuilder stringBuilder = new StringBuilder();
                                 for (int i = 0; i < items.size(); i++) {
                                     TextBlock item = items.valueAt(i);
                                     if (isNumeric(item.getValue().replace(',', '.'))) {
-                                        //stringBuilder.append(item.getValue().replaceAll(".",""));
-                                        //stringBuilder.append("\n");
                                         fiyat = Double.parseDouble(item.getValue().replace(".","").replace(',', '.'));
                                         break;
                                     }
                                 }
-                                //mTextView.setText(stringBuilder.toString());
-                                //stop();
                             }
                         });
                     }
                 }
             });
         }
-    }
-
-    public void stop(){
-
-        if(mCameraSource != null){
-            //this.autoFocusEngine.stop();
-            mCameraSource.stop();
-            //mCameraSource = null;
-        }
-        Log.d(TAG, "CameraEngine Stopped");
     }
 
     private static boolean isNumeric(String str) {
@@ -278,171 +230,5 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
             return false;
         }
         return true;
-    }
-
-    private class myAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        String modalMesaj;
-        ProgressDialog dialog;
-
-        String productName = "";
-        String categoryName = "";
-        String unitPrice = "";
-
-        JSONObject jsonObject = null;
-
-        public myAsyncTask(String mMesaj) {
-            this.modalMesaj = mMesaj;
-            this.dialog = new ProgressDialog(DovizCevrim.this);
-        }
-
-        protected void onPreExecute() {
-            /*dialog.setMessage(modalMesaj);
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            dialog.show();*/
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            //String url = "https://www.doviz.com/api/v1/currencies/EUR/latest";
-            StringBuilder link = new StringBuilder();
-            link.append("http://free.currencyconverterapi.com/api/v5/convert?q=");
-            link.append(kaynakDoviz);
-            link.append("_");
-            link.append(hedefDoviz);
-            link.append("&compact=y");
-
-            String url = link.toString();
-
-            HttpClient httpclient = new DefaultHttpClient();
-
-            HttpGet httpget = new HttpGet(url);
-
-            HttpResponse response;
-            try {
-                response = httpclient.execute(httpget);
-
-                HttpEntity entity = response.getEntity();
-
-                if (entity != null) {
-                    InputStream instream = entity.getContent();
-                    String result = convertStreamToString(instream);
-
-                    jsonObject = new JSONObject(result);
-
-                    instream.close();
-                }
-
-            } catch (ClientProtocolException e) {
-                Mesaj(e.getMessage());
-            } catch (IOException e) {
-                Mesaj(e.getMessage());
-            } catch (JSONException e) {
-                Mesaj(e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (dialog.isShowing())
-                dialog.dismiss();
-
-            try {
-
-                String oran = jsonObject.getJSONObject(kaynakDoviz + "_" + hedefDoviz).getString("val").toString();
-
-                Double sonuc = Double.valueOf(fiyat) * Math.round(Double.parseDouble(oran));
-                mTextView.setText(fiyat.toString() + " " + kaynakDoviz + " : " + sonuc.toString() + " " + hedefDoviz);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void Mesaj(String s) {
-
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
-    }
-
-    private static String convertStreamToString(InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-
-    private List<String> getDovizBilgi() {
-        //uygulama yanıt vermiyor hatasının önüne geçmek için
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        String dobiz_url = "http://www.tcmb.gov.tr/kurlar/today.xml"; //merkez bankasının xml dosyasını çekeceğiz
-
-        List<String> doviz_list = new ArrayList<>(); //oluşturduğum döviz listesi
-        HttpURLConnection baglanti = null; //web servise ulaşmak için bağlantı oluşturdum. başlangıç değeri null
-
-        try {
-            URL url = new URL(dobiz_url);
-
-            baglanti=(HttpURLConnection) url.openConnection(); //bağlantıyı açıyoruz
-
-            int baglanti_durumu=baglanti.getResponseCode();//bağlantı başarılı mı kontrol ediyoz. integer bir değer döner
-
-            if(baglanti_durumu==HttpURLConnection.HTTP_OK){ //HTTP_NOTFOUND da bağlantı başarısız mı diye kontrol eder.
-
-                BufferedInputStream stream=new BufferedInputStream(baglanti.getInputStream());
-                DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance(); //kendi sınıf içerisinde nesne örneklemesi yapar newinstance();
-                DocumentBuilder documentBuilder=documentBuilderFactory.newDocumentBuilder();
-
-                Document document =documentBuilder.parse(stream); // document değişkenim var, parse ettim, //iki farklı paket var import tan
-
-                NodeList dovizNodeList = document.getElementsByTagName("Currency");//liste tagname le ulaştık. id le ulaşmak gibi id si yok bunun
-
-                for(int i=0; i<dovizNodeList.getLength(); i++ ) { //bütün etiketlere ulaşmak için for. kaç tane etiket varsa length
-
-                    Element element = (Element) dovizNodeList.item(i); //3farklı paket var
-
-                    NodeList nodeListBirim = element.getElementsByTagName("Unit");
-                    NodeList nodeListParaBirimi = element.getElementsByTagName("Isim");
-                    NodeList nodeListAlis = element.getElementsByTagName("ForexBuying");
-                    NodeList nodeListSatis = element.getElementsByTagName("ForexSelling");
-
-                    String birim = nodeListBirim.item(0).getFirstChild().getNodeValue();//ilk eleman, ilk çocuk,ilk değer
-                    String parabirimi = nodeListParaBirimi.item(0).getFirstChild().getNodeValue();
-                    String alis = nodeListAlis.item(0).getFirstChild().getNodeValue();
-                    String satis = nodeListSatis.item(0).getFirstChild().getNodeValue();
-                    if (element.getAttribute("Kod").equals("USD") || element.getAttribute("Kod").equals("IQD") || element.getAttribute("Kod").equals("EUR")) {
-                        doviz_list.add(birim + " " + parabirimi + " Alış: " + alis + " Satış: " + satis);
-                    }
-                }
-            }
-        }catch (Exception e){
-            Log.e("Xml parse hatası",e.getLocalizedMessage().toString()); //hata mesajı
-
-        }
-        finally { //hata olsun olmasın çalışacak. internet bağlantısı varsa
-            if(baglanti !=null){
-                baglanti.disconnect();
-            }
-        }
-        return doviz_list;
     }
 }

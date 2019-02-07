@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -37,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinnerKaynakDoviz = (Spinner) findViewById(R.id.kaynakDoviz);
-        spinnerHedefDoviz = (Spinner) findViewById(R.id.hedefDoviz);
-        btnCevirmAc = (Button) findViewById(R.id.buttonCevrimAc);
+        spinnerKaynakDoviz = findViewById(R.id.kaynakDoviz);
+        spinnerHedefDoviz = findViewById(R.id.hedefDoviz);
+        btnCevirmAc = findViewById(R.id.buttonCevrimAc);
 
         //Spinner'lar için adapterleri hazırlıyoruz.
-        dataAdapterForKaynakDoviz = new ArrayAdapter<String>(this, R.layout.spinner_text_main, dovizlerDeneme);
-        dataAdapterForHedefDoviz = new ArrayAdapter<String>(this, R.layout.spinner_text_main, dovizlerDeneme);
+        dataAdapterForKaynakDoviz = new ArrayAdapter<>(this, R.layout.spinner_text_main, dovizlerDeneme);
+        dataAdapterForHedefDoviz = new ArrayAdapter<>(this, R.layout.spinner_text_main, dovizlerDeneme);
 
         //Listelenecek verilerin görünümünü belirliyoruz.
         dataAdapterForKaynakDoviz.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnManuelGiris = (Button) findViewById(R.id.butonManuelCevrim);
+        btnManuelGiris = findViewById(R.id.butonManuelCevrim);
         btnManuelGiris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdView adView = this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
         adView.loadAd(adRequest); //adView i yüklüyoruz
 
