@@ -87,7 +87,7 @@ public class DovizCevrim extends AppCompatActivity implements View.OnClickListen
         kamerayiBaslat();
 
         AdView adView = this.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("5D4729103FAD02866CF82284B04568E5").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest); //adView i yüklüyoruz
     }
 
